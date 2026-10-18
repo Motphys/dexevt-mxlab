@@ -1,0 +1,4 @@
+include AGENTS.md
+include uv.lock
+include .python-version
+recursive-include configs *.yaml

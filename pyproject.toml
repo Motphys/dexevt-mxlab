@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=77,<83"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dexevt-mxlab"
+version = "0.1.0"
+description = "Dex-EVT locomotion and whole-body tracking with MotrixLab."
+readme = "README.md"
+requires-python = ">=3.10,<3.12"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+dependencies = ["motrixlab==0.4.0"]
+
+[project.entry-points."motrix_env_core.envs"]
+dexevt_mxlab = "dexevt_mxlab.registration:register"
+
+[project.entry-points."motrix_env_core.robots"]
+dexevt_mxlab = "dexevt_mxlab.registration:register_robots"
+
+[tool.setuptools.package-data]
+dexevt_mxlab = [
+    "envs/common/assets/*.png",
+    "envs/wbt/assets/*.npz",
+    "robots/assets/dexevt/*.urdf",
+    "robots/assets/dexevt/meshes/*.STL",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3,<9",
+    "ruff==0.15.7",
+    "tensorboard>=2.21.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.uv]
+environments = ["sys_platform == 'linux' and platform_machine == 'x86_64'"]
+# Apply the CUDA index override to transitive Torch with uv 0.9.8.
+constraint-dependencies = ["torch>=2.7,<3"]
+
+# RTX 5090 / Blackwell requires a CUDA 12.8-capable Torch build.
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["integration: installed environment and robot plugin contracts"]
