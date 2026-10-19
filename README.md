@@ -4,6 +4,8 @@
 
 仓库提供机器人模型与资产、任务实现和 FastSAC 训练配置，同时展示如何通过 MotrixLab 的插件机制接入自定义机器人与环境。
 
+原始项目与机器人资产来自 [Open-X-Humanoid/xMimic](https://github.com/Open-X-Humanoid/xMimic)，本项目基于其内容适配 MotrixLab，感谢原作者的开源贡献。
+
 ## 成果展示
 
 | 平地行走 · Flat walking | 全身动作跟踪 · WBT dance |
